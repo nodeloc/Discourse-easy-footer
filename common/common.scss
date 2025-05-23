@@ -1,14 +1,14 @@
 .custom-footer {
   display: flex;
   flex-wrap: wrap;
-  background: var(--primary);
-
+  background: var(--header_background);
+  color: var(--primary-low-rgb);
   .wrap {
     box-sizing: border-box;
   }
 
   .flexbox {
-    width: 100%;
+    width: calc(var(--d-sidebar-width) + var(--d-max-width));
     display: flex;
     flex-wrap: wrap;
     color: var(--secondary);
@@ -161,6 +161,10 @@
 
 @media screen and (max-width: 700px) {
   .custom-footer {
+    .flexbox {
+      width: 100%;
+    }
+
     .first-box {
       width: 100%;
     }
