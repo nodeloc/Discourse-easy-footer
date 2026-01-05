@@ -9,14 +9,17 @@
 
   .flexbox {
     width: calc(var(--d-sidebar-width) + var(--d-max-width));
+    max-width: 100%;
     display: flex;
     flex-wrap: wrap;
     color: var(--primary);
-    padding: 2em 0 1em 0;
+    padding: 2em 1em 1em 1em;
+    box-sizing: border-box;
   }
 
   .first-box {
     max-width: 20%;
+    min-width: 200px;
 
     .heading {
       font-size: $font-up-2;
@@ -126,6 +129,10 @@
 
 @media screen and (max-width: $large-width) {
   .custom-footer {
+    .flexbox {
+      padding: 2em 1.5em 1em 1.5em;
+    }
+
     .first-box {
       max-width: 100%;
       border-bottom: 1px solid rgba(var(--primary-low-rgb), 0.05);
@@ -159,10 +166,56 @@
   }
 }
 
+// 平板设备优化 (768px - 1024px)
+@media screen and (min-width: 701px) and (max-width: 1024px) {
+  .custom-footer {
+    .flexbox {
+      width: 100%;
+      padding: 2em 2em 1em 2em;
+    }
+
+    .first-box {
+      max-width: 35%;
+      min-width: 250px;
+    }
+
+    .second-box {
+      max-width: 65%;
+
+      .links ul {
+        min-width: 120px;
+        margin: 0 1em;
+      }
+    }
+
+    .list {
+      font-size: $font-0;
+    }
+
+    .third-box {
+      flex-direction: column;
+      align-items: flex-start;
+      padding-top: 1em;
+
+      .footer-links {
+        order: 2;
+        margin-top: 1em;
+      }
+
+      .social {
+        order: 1;
+        justify-content: flex-start;
+        width: 100%;
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 700px) {
   .custom-footer {
     .flexbox {
       width: 100%;
+      padding: 1.5em 1em;
     }
 
     .first-box {
@@ -179,6 +232,48 @@
 
     .links {
       display: inline-block;
+    }
+
+    .third-box {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+
+      .footer-links {
+        order: 2;
+        margin-top: 1em;
+      }
+
+      .social {
+        order: 1;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+// 小屏移动设备优化 (< 480px)
+@media screen and (max-width: 480px) {
+  .custom-footer {
+    .flexbox {
+      padding: 1em 0.75em;
+    }
+
+    .list {
+      min-width: 100%;
+      margin-top: 0.75em;
+    }
+
+    .second-box .links ul {
+      margin: 0.5em 0;
+    }
+
+    .third-box .social .social-link {
+      margin: 15px 8px;
+    }
+
+    .first-box .heading {
+      font-size: $font-up-1;
     }
   }
 }
