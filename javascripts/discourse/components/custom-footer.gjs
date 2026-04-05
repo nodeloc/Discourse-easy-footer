@@ -1,11 +1,31 @@
 import Component from "@glimmer/component";
+import I18n from "discourse-i18n";
 import dasherize from "discourse/helpers/dasherize";
 import PluginOutlet from "discourse/components/plugin-outlet";
 import icon from "discourse/helpers/d-icon";
 
 export default class CustomFooter extends Component {
-  mainHeading = settings.heading;
-  blurb = settings.blurb;
+  localizeText(defaultText, translations) {
+    if (!translations?.length) return defaultText;
+
+    const raw = I18n.currentLocale().replace("-", "_");
+    const lang = raw.split("_")[0];
+
+    const match =
+      translations.find((t) => t.locale === raw) ||
+      translations.find((t) => t.locale === lang) ||
+      translations.find((t) => raw.startsWith(t.locale));
+
+    return match ? match.text : defaultText;
+  }
+
+  get mainHeading() {
+    return this.localizeText(settings.heading, settings.heading_translations);
+  }
+
+  get blurb() {
+    return this.localizeText(settings.blurb, settings.blurb_translations);
+  }
 
   <template>
     {{#if @showFooter}}
@@ -29,7 +49,7 @@ export default class CustomFooter extends Component {
                       data-easyfooter-section={{dasherize section.text}}
                     >
                       <span title={{section.title}}>
-                        {{section.text}}
+                        {{this.localizeText section.text section.translations}}
                       </span>
 
                       <ul>
@@ -45,7 +65,7 @@ export default class CustomFooter extends Component {
                               target={{link.target}}
                               referrerpolicy={{link.referrer_policy}}
                             >
-                              {{link.text}}
+                              {{this.localizeText link.text link.translations}}
                             </a>
                           </li>
                         {{/each}}
@@ -65,7 +85,7 @@ export default class CustomFooter extends Component {
                     target={{link.target}}
                     href={{link.url}}
                   >
-                    {{link.text}}
+                    {{this.localizeText link.text link.translations}}
                   </a>
                 {{/each}}
               </div>
