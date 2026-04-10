@@ -5,6 +5,8 @@
   color: var(--primary-low-rgb);
   .wrap {
     box-sizing: border-box;
+    width: 100%;
+    overflow: hidden;
   }
 
   .flexbox {
@@ -19,7 +21,9 @@
 
   .first-box {
     max-width: 20%;
-    min-width: 200px;
+    min-width: min(200px, 100%);
+    overflow-wrap: break-word;
+    word-break: break-word;
 
     .heading {
       font-size: $font-up-2;
